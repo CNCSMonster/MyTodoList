@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 
 import java.awt.Container;
 import java.awt.event.*;
+import java.awt.*;
 
 
 
@@ -23,11 +24,15 @@ public class MyTodoList extends JPanel implements Observer{
     //基本任务滚动面板
     private MissionPane missionPane;
 
+    //切换界面用的布局
+    CardLayout card;
+
     //基本功能界面
     // private AbstractFunctionPanel addPanel;
-    public AbstractFunctionPanel addPanel;
+    private AbstractFunctionPanel addPanel;
     private AbstractFunctionPanel editPanel;
     private AbstractFunctionPanel timePanel;
+    private JPanel mainPanel;
 
     
 
@@ -44,36 +49,29 @@ public class MyTodoList extends JPanel implements Observer{
         jButtons[0].addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                MyTodoList.this.removeAll();
-                MyTodoList.this.add(addPanel);
-                MyTodoList.this.repaint();
+                card.show(MyTodoList.this,addPanel.getName());
             }
         });
         jButtons[1].addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 //如果没有选中的任务，不能使用计时功能
-                // if(missionPane.getCurMission()==null){
-                //     JOptionPane.showMessageDialog(MyTodoList.this, "请先选中任务");
-                //     return;
-                // }
-                MyTodoList.this.removeAll();
-
-                MyTodoList.this.add(timePanel);
-                MyTodoList.this.repaint();
+                if(missionPane.getCurMission()==null){
+                    JOptionPane.showMessageDialog(MyTodoList.this, "请先选中任务");
+                    return;
+                }
+                card.show(MyTodoList.this, timePanel.getName());
             }
         });
         jButtons[2].addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 //如果没有选中的任务，不能使用编辑功能
-                // if(missionPane.getCurMission()==null){
-                //     JOptionPane.showMessageDialog(MyTodoList.this, "请先选中任务");
-                //     return;
-                // }
-                MyTodoList.this.removeAll();
-                MyTodoList.this.add(editPanel);
-                MyTodoList.this.repaint();
+                if(missionPane.getCurMission()==null){
+                    JOptionPane.showMessageDialog(MyTodoList.this, "请先选中任务");
+                    return;
+                }
+                card.show(MyTodoList.this, editPanel.getName());
             }
         });
         jButtons[3].addActionListener(new ActionListener(){
@@ -102,6 +100,21 @@ public class MyTodoList extends JPanel implements Observer{
         addPanel.addObserver(this);
         editPanel.addObserver(this);
         timePanel.addObserver(this);
+        addPanel.setName("addPanel");
+        editPanel.setName("editPanel");
+        timePanel.setName("timePanel");
+    }
+
+    //创建主面板
+    private void creMainPanel(){
+        mainPanel=new JPanel();
+        mainPanel.setBounds(0,0,getWidth(),getHeight());
+        mainPanel.setLayout(null);
+        mainPanel.setName("mainPanel");
+        for(JButton jButton:jButtons){
+            if(jButton!=null) mainPanel.add(jButton);
+        }
+        if(missionPane!=null) mainPanel.add(missionPane);
     }
 
     public MyTodoList(){
@@ -110,14 +123,19 @@ public class MyTodoList extends JPanel implements Observer{
 
     public MyTodoList(int width,int height){
         setBounds(0,0,width,height);
-        setLayout(null);
+        card=new CardLayout();
+        setLayout(card);
         d=width/11;
         h=height/13;
         // 构造任务滚动板实例以及各个功能面板的实例
         creButtons();
         creFunctionPanels();
-        init();
-
+        creMainPanel();
+        if(mainPanel!=null) add(mainPanel.getName(),mainPanel);
+        if(addPanel!=null) add(addPanel.getName(),addPanel);
+        if(editPanel!=null) add(editPanel.getName(),editPanel);
+        if(timePanel!=null) add(timePanel.getName(),timePanel);
+        card.show(MyTodoList.this, mainPanel.getName());
     }
 
 
@@ -127,18 +145,11 @@ public class MyTodoList extends JPanel implements Observer{
     //接受到功能界面的通知后返回主界面
     @Override
     public void update(Object message) {
-        if(message==null) return;
-        init();
+        //切换到主面板
+        card.show(MyTodoList.this, mainPanel.getName());
     }
 
-    public void init(){
-        this.removeAll();
-        for(JButton jButton:jButtons){
-            if(jButton!=null) add(jButton);
-        }
-        if(missionPane!=null) add(missionPane);
-        repaint();
-    }
+   
 
 
 
