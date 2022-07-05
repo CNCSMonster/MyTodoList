@@ -32,6 +32,7 @@ public abstract class AbstractFunctionPanel extends JPanel implements Publisher{
     protected JTextArea jTextArea;
     protected Observer observer;
     protected MissionPane missionPane;
+    protected JScrollPane jScrollPane;
 
     
 
@@ -42,8 +43,8 @@ public abstract class AbstractFunctionPanel extends JPanel implements Publisher{
     public void initLeftArea(){
         //加上滚动文本区域作为具体任务内容的输入和显示区域
         jTextArea=new JTextArea();
-        JScrollPane jScrollPane=new JScrollPane(jTextArea);
-        jScrollPane.setBounds(d,6*h,6*d,6*h);
+        jScrollPane=new JScrollPane(jTextArea);
+        jScrollPane.setBounds(d,6*h,6*d,5*h);
         add(jScrollPane);
 
         //加上文本输入与现实标签
@@ -113,6 +114,11 @@ public abstract class AbstractFunctionPanel extends JPanel implements Publisher{
     public AbstractFunctionPanel(int width,int height,MissionPane missionPane){
         this(width,height);
         this.missionPane=missionPane;
+    }
+
+    public AbstractFunctionPanel(int x,int y,int width,int height,MissionPane missionPane){
+        this(width, height,missionPane);
+        setLocation(x, y);
     }
 
 

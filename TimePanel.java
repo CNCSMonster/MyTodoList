@@ -11,6 +11,10 @@ public class TimePanel extends AbstractFunctionPanel{
     Mission mission;
 
     public TimePanel(int width, int height,MissionPane missionPane) {
+        this(0, 0, width, height, missionPane);
+    }
+
+    public TimePanel(int x, int y, int width, int height, MissionPane missionPane) {
         super(width, height,missionPane);
         jButtons[0].setText("开始");
         jButtons[1].setText("暂停");
@@ -21,10 +25,13 @@ public class TimePanel extends AbstractFunctionPanel{
             if(jTextField!=null) jTextField.setEditable(false);
         }
         if(missionPane!=null) mission=missionPane.getCurMission();
-        mission=new Mission();      //用来测试用的语句
-        jTextFields[0].setText(mission.getText());
-        jTextArea.setText(mission.getContent());
+        // mission=new Mission();      //用来测试用的语句
+        if(mission!=null){
+            jTextFields[0].setText(mission.getText());
+            jTextArea.setText(mission.getContent());
+        }
         refreshTimeFiled();
+        setLocation(x,y);
     }
 
     @Override
@@ -57,6 +64,7 @@ public class TimePanel extends AbstractFunctionPanel{
 
     //刷新时间文本行显示
     public void refreshTimeFiled() {
+        if(mission==null) return;
         int h = 0;
         int m = 0;
         int s = 0;
@@ -77,6 +85,7 @@ public class TimePanel extends AbstractFunctionPanel{
     //暂停计时
     @Override
     public void actionB() {
+        if(mission==null) return;
         //结束任务计时线程
         mission.pauseCounttDown();
         //如果从未开始计时，则退出方法
@@ -93,7 +102,7 @@ public class TimePanel extends AbstractFunctionPanel{
     @Override
     public void actionC() {
         super.actionC();
-        //结束任务计时线程
+        //退出任务的同时会结束计时线程
         actionB();
     }
 
@@ -112,9 +121,9 @@ public class TimePanel extends AbstractFunctionPanel{
     //计时结束事件
     public void timeEnd(){
         //TODO 弹窗提示，播放音乐，
+
         //通知上级容器切换窗口
         notice(observer);
-
     }
 
     

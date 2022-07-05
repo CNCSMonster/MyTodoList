@@ -21,16 +21,19 @@ public class Mission extends JButton implements Publisher{
     private Observer observer;
     
 
-    //计算时间上限，还有倒计时
-
+    public Mission(int limitTime,int x,int y,int height,int width,String title,String content){
+        setBounds(x,y,width,height);
+        int thickOfborder=height/10>2?height/10:4;
+        setBorder(BorderFactory.createLineBorder(Color.gray, thickOfborder));
+        addMouseListener(new SwapIfChosen());
+        this.limitTime=limitTime;
+        restTime=limitTime;
+        setText(title);
+        setContent(content);
+    }
 
     public Mission(int width,int height){
-        setSize(width,height);
-        setBorder(BorderFactory.createLineBorder(Color.gray, height/10));
-        addMouseListener(new SwapIfChosen());
-        limitTime=60;
-        restTime=limitTime;
-        setText("空标题");
+        this(0,0,width,height);
     }
 
     public Mission(int x,int y,int width,int height){
@@ -42,26 +45,12 @@ public class Mission extends JButton implements Publisher{
         setText("空标题");
     }
 
-    public Mission(int width,int height,String text,String content){
-        this(width, height);
-        setText(text);
-        setContent(content);
+    public Mission(int width,int height,String title,String content){
+        this(60,0,0,width, height,title,content);
     }
 
     public Mission(int limitTime,int x,int y,int height,int width){
-        
-        setBounds(x,y,width,height);
-        setBorder(BorderFactory.createLineBorder(Color.gray, height/10));
-        addMouseListener(new SwapIfChosen());
-        this.limitTime=limitTime;
-        restTime=limitTime;
-        setText("空标题");
-    }
-
-    public Mission(int limitTime,int x,int y,int height,int width,String title,String content){
-        this(limitTime, x, y, height, width);
-        setText(title);
-        setContent(content);
+        this(limitTime, x, y, height, width,"空标题","空内容");
     }
 
     public Mission(int limitTime,String title,String content){
@@ -70,9 +59,7 @@ public class Mission extends JButton implements Publisher{
 
 
     public Mission(int limitTime,int height ,int width,String title,String content){
-        this(limitTime, 0, 0, height, width);
-        setText(title);
-        setContent(content);
+        this(limitTime, 0, 0, height, width,title,content);
     }
 
     
@@ -144,6 +131,7 @@ public class Mission extends JButton implements Publisher{
     @Override
     protected void paintBorder(Graphics g) {
         if(isSelected())  super.paintBorder(g);
+        
     }
 
     class SwapIfChosen extends MouseAdapter{

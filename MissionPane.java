@@ -50,11 +50,11 @@ class MissionPane extends JScrollPane implements Observer{
         }
         jPanel.add(mission);
         jPanel.repaint();
-        repaint();
     }
 
     public void removeMission(Mission mission){
         if(mission==null) return;
+        if(curMission==mission) curMission=null;
         jPanel.remove(mission);
         int num=missions.size();    
         missions.remove(mission);
@@ -67,23 +67,25 @@ class MissionPane extends JScrollPane implements Observer{
 
     @Override
     public void update(Object message) {
-        if(message==null) return;
-        if(!(message instanceof Mission)) return;
-        //如果是再次点击已经选中的任务
-        if(message==curMission){
-            curMission.setSelected(false);
-            curMission=null;
-        }
-        //如果之前没有任务被选中
-        else if(curMission==null){
-            curMission=(Mission)message;
-            curMission.setSelected(true);
-        }
-        //如果发生点击的是新任务
-        else{
-            curMission.setSelected(false);
-            curMission=(Mission)message;
-            curMission.setSelected(true);
+        synchronized(message){
+            if(message==null) return;
+            if(!(message instanceof Mission)) return;
+            //如果是再次点击已经选中的任务
+            if(message==curMission){
+                curMission.setSelected(false);
+                curMission=null;
+            }
+            //如果之前没有任务被选中
+            else if(curMission==null){
+                curMission=(Mission)message;
+                curMission.setSelected(true);
+            }
+            //如果发生点击的是新任务
+            else{
+                curMission.setSelected(false);
+                curMission=(Mission)message;
+                curMission.setSelected(true);
+            }
         }
     }
 

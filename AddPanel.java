@@ -1,5 +1,11 @@
+import java.awt.Graphics;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -8,15 +14,20 @@ import javax.swing.SwingUtilities;
  */
 public class AddPanel extends AbstractFunctionPanel{
 
+
+
     public AddPanel(int width, int height,MissionPane missionPane) {
-        super(width, height,missionPane);
+        this(0,0,width,height,missionPane);
+    }
+
+    public AddPanel(int x, int y, int width, int height, MissionPane missionPane) {
+        super(x,y,width, height, missionPane);
         jButtons[0].setText("增加");
         jButtons[1].setText("清空");
         jButtons[2].setText("退出");
-        
     }
 
-    @Override
+	@Override
     public void actionA() {
 
         try {
@@ -71,6 +82,29 @@ public class AddPanel extends AbstractFunctionPanel{
         jTextArea.setText("");
     }
     
+    //增加后操作
+    public void afterAdd(){
+        JOptionPane.showMessageDialog(this, "增加成功!");
+        //然后退出界面
+        notice(observer);
+    }
+
+    
+
+    @Override
+    public void paintComponents(Graphics g) {
+        if(jScrollPane!=null) jScrollPane.paint(g);
+        for(JButton jButton:jButtons){
+            if(jButton!=null) jButton.paint(g);
+        }
+        for(JLabel jLabel:jLabels){
+            if(jLabel!=null) jLabel.paint(g);
+        }
+        for(JTextField jTextField:jTextFields){
+            if(jTextField!=null) jTextField.paint(g);
+        }
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()->{
@@ -79,7 +113,11 @@ public class AddPanel extends AbstractFunctionPanel{
             jFrame.setVisible(true);
             jFrame.setLayout(null);
             AbstractFunctionPanel abstractFunctionPanel=new AddPanel(Main.width,Main.height,null);
-            jFrame.add(abstractFunctionPanel);
+            JPanel jPanel=new JPanel();
+            jPanel.setBounds(0,0,Main.width,Main.height);
+            jPanel.setLayout(null);
+            jPanel.add(abstractFunctionPanel);
+            jFrame.add(jPanel);
 
             
         });

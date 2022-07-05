@@ -14,9 +14,15 @@ public class EditPanel extends AbstractFunctionPanel{
         jButtons[1].setText("还原");
         jButtons[2].setText("退出");
         if(missionPane!=null) mission=missionPane.getCurMission();
-        mission=new Mission(111,"dd","busdsds");
+        // mission=new Mission(111,"dd","busdsds"); //测试用语句
         actionB();
     }
+
+    public EditPanel(int x, int y, int width, int height, MissionPane missionPane) {
+        this(width, height, missionPane);
+        setLocation(x,y);
+    }
+
 
     @Override
     public void actionA() {
@@ -94,7 +100,6 @@ public class EditPanel extends AbstractFunctionPanel{
     public void afterEdit(){
         //TODO 修改成功后处理，比如提示弹窗，比如退出当前界面
         JOptionPane.showMessageDialog(this, "修改成功！");
-
         notice(observer);
     }
 
