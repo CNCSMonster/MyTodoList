@@ -40,7 +40,7 @@ class MissionPane extends JScrollPane implements Observer{
     public void addMission(Mission mission){
         int num=missions.size();
         mission.setBounds(missionWidth/5,missionheight/2+missionheight/2*3*num,missionWidth,missionheight);
-        mission.setMissionPane(this);
+        mission.addObserver(this);
         if(num>=4){
             jPanel.setPreferredSize(new Dimension(getWidth(),missionheight/2*3*(num+1)));
             missions.add(num,mission);
@@ -50,8 +50,20 @@ class MissionPane extends JScrollPane implements Observer{
         }
         jPanel.add(mission);
         jPanel.repaint();
-        this.repaint();
+        repaint();
     }
+
+    public void removeMission(Mission mission){
+        if(mission==null) return;
+        jPanel.remove(mission);
+        int num=missions.size();    
+        missions.remove(mission);
+        //可能对空间进行缩小，一页最多四个任务，所以多于四个任务删除后就要缩小空间
+        if(num>4) jPanel.setPreferredSize(new Dimension(getWidth(),missionheight/2*3*(num-1)));
+        repaint();
+    }
+
+
 
     @Override
     public void update(Object message) {
@@ -60,6 +72,7 @@ class MissionPane extends JScrollPane implements Observer{
         //如果是再次点击已经选中的任务
         if(message==curMission){
             curMission.setSelected(false);
+            curMission=null;
         }
         //如果之前没有任务被选中
         else if(curMission==null){
@@ -74,7 +87,9 @@ class MissionPane extends JScrollPane implements Observer{
         }
     }
 
-    
+    public Mission getCurMission() {
+        return curMission;
+    }
 
 
 
@@ -86,14 +101,24 @@ class MissionPane extends JScrollPane implements Observer{
         jFrame.setLayout(null);
         MissionPane missionPane=new MissionPane(100,100,300, 300);
         missionPane.addMission(new Mission());
-        missionPane.addMission(new Mission());
         jFrame.add(missionPane);
         jFrame.setVisible(true);
-        for(int i=0;i<30;i++){
-            Thread.sleep(2000);
-            missionPane.addMission(new Mission());
+        Mission[] missions=new Mission[3];
+        for(int i=0;i<missions.length;i++){
+            // Thread.sleep(1000);
+            missions[i]=new Mission();
+            missionPane.addMission(missions[i]);
         }
+        for(int i=0;i<missions.length;i++){
+            Thread.sleep(1000);
+            missionPane.removeMission(missions[i]);
+        }
+
+        
+
     }
+
+
 
 
 }
