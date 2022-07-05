@@ -14,7 +14,7 @@ public class EditPanel extends AbstractFunctionPanel{
         jButtons[1].setText("还原");
         jButtons[2].setText("退出");
         if(missionPane!=null) mission=missionPane.getCurMission();
-        // mission=new Mission(111,"dd","busdsds"); //测试用语句
+        mission=new Mission(111,"dd","busdsds"); //测试用语句
         actionB();
     }
 

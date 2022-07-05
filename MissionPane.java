@@ -67,8 +67,8 @@ class MissionPane extends JScrollPane implements Observer{
 
     @Override
     public void update(Object message) {
+        if(message==null) return;
         synchronized(message){
-            if(message==null) return;
             if(!(message instanceof Mission)) return;
             //如果是再次点击已经选中的任务
             if(message==curMission){

@@ -25,7 +25,7 @@ public class TimePanel extends AbstractFunctionPanel{
             if(jTextField!=null) jTextField.setEditable(false);
         }
         if(missionPane!=null) mission=missionPane.getCurMission();
-        // mission=new Mission();      //用来测试用的语句
+        mission=new Mission(100,"任务1","喜欢玩游戏");      //用来测试用的语句
         if(mission!=null){
             jTextFields[0].setText(mission.getText());
             jTextArea.setText(mission.getContent());

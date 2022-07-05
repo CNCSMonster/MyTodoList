@@ -122,8 +122,6 @@ public abstract class AbstractFunctionPanel extends JPanel implements Publisher{
     }
 
 
-
-
     public abstract void actionA();
 
     public abstract void actionB();
