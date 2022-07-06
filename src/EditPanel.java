@@ -1,3 +1,4 @@
+package src;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -14,13 +15,18 @@ public class EditPanel extends AbstractFunctionPanel{
         jButtons[1].setText("还原");
         jButtons[2].setText("退出");
         if(missionPane!=null) mission=missionPane.getCurMission();
-        mission=new Mission(111,"dd","busdsds"); //测试用语句
-        actionB();
+        // mission=new Mission(111,"dd","busdsds"); //测试用语句
+        init();
     }
 
     public EditPanel(int x, int y, int width, int height, MissionPane missionPane) {
         this(width, height, missionPane);
         setLocation(x,y);
+    }
+
+
+    public void init() {
+        actionB();
     }
 
 
@@ -98,7 +104,6 @@ public class EditPanel extends AbstractFunctionPanel{
 
     //修改成功后处理
     public void afterEdit(){
-        //TODO 修改成功后处理，比如提示弹窗，比如退出当前界面
         JOptionPane.showMessageDialog(this, "修改成功！");
         notice(observer);
     }
@@ -107,10 +112,10 @@ public class EditPanel extends AbstractFunctionPanel{
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()->{
             JFrame jFrame=new JFrame();
-            jFrame.setBounds(100,100,Main.width,Main.height);
+            jFrame.setBounds(100,100,Parameter.width,Parameter.height);
             jFrame.setVisible(true);
             jFrame.setLayout(null);
-            AbstractFunctionPanel abstractFunctionPanel=new EditPanel(Main.width,Main.height,null);
+            AbstractFunctionPanel abstractFunctionPanel=new EditPanel(Parameter.width,Parameter.height,null);
             jFrame.add(abstractFunctionPanel);
         });
     }

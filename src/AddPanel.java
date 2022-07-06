@@ -1,3 +1,4 @@
+package src;
 import java.awt.Graphics;
 
 import javax.swing.JButton;
@@ -108,18 +109,23 @@ public class AddPanel extends AbstractFunctionPanel{
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()->{
             JFrame jFrame=new JFrame();
-            jFrame.setBounds(100,100,Main.width,Main.height);
+            jFrame.setBounds(100,100,Parameter.width,Parameter.height);
             jFrame.setVisible(true);
             jFrame.setLayout(null);
-            AbstractFunctionPanel abstractFunctionPanel=new AddPanel(Main.width,Main.height,null);
+            AbstractFunctionPanel abstractFunctionPanel=new AddPanel(Parameter.width,Parameter.height,null);
             JPanel jPanel=new JPanel();
-            jPanel.setBounds(0,0,Main.width,Main.height);
+            jPanel.setBounds(0,0,Parameter.width,Parameter.height);
             jPanel.setLayout(null);
             jPanel.add(abstractFunctionPanel);
             jFrame.add(jPanel);
 
             
         });
+    }
+
+    @Override
+    public void init() {
+        
     }
 
 

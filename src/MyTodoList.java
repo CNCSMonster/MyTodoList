@@ -1,3 +1,4 @@
+package src;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -61,6 +62,7 @@ public class MyTodoList extends JPanel implements Observer{
                     return;
                 }
                 card.show(MyTodoList.this, timePanel.getName());
+                timePanel.init();
             }
         });
         jButtons[2].addActionListener(new ActionListener(){
@@ -72,6 +74,7 @@ public class MyTodoList extends JPanel implements Observer{
                     return;
                 }
                 card.show(MyTodoList.this, editPanel.getName());
+                editPanel.init();
             }
         });
         jButtons[3].addActionListener(new ActionListener(){
@@ -118,7 +121,7 @@ public class MyTodoList extends JPanel implements Observer{
     }
 
     public MyTodoList(){
-        this(Main.width,Main.height);
+        this(Parameter.width,Parameter.height);
     }
 
     public MyTodoList(int width,int height){
@@ -158,9 +161,9 @@ public class MyTodoList extends JPanel implements Observer{
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()->{
             JFrame jFrame=new JFrame();
-            jFrame.setBounds(0,0,Main.width,Main.height);
+            jFrame.setBounds(0,0,Parameter.width,Parameter.height);
             jFrame.setLayout(null);
-            MyTodoList mtl=new MyTodoList(Main.width,Main.height);
+            MyTodoList mtl=new MyTodoList(Parameter.width,Parameter.height);
             jFrame.setContentPane((Container) mtl);
             jFrame.setVisible(true);
         });

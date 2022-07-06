@@ -1,8 +1,10 @@
+package src;
 import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+
 import java.awt.event.*;
 /*
  * @author

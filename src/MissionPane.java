@@ -1,3 +1,4 @@
+package src;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,9 +59,17 @@ class MissionPane extends JScrollPane implements Observer{
         jPanel.remove(mission);
         int num=missions.size();    
         missions.remove(mission);
+        //删除任务之后要对任务进行空间上的重排
+        for(int i=0;i<missions.size();i++){
+            missions.get(i).setBounds(missionWidth/5,missionheight/2+missionheight/2*3*i,missionWidth,missionheight);
+        }
         //可能对空间进行缩小，一页最多四个任务，所以多于四个任务删除后就要缩小空间
         if(num>4) jPanel.setPreferredSize(new Dimension(getWidth(),missionheight/2*3*(num-1)));
         repaint();
+
+
+
+
     }
 
 

@@ -1,3 +1,4 @@
+package src;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -102,10 +103,10 @@ public abstract class AbstractFunctionPanel extends JPanel implements Publisher{
 
 
     private AbstractFunctionPanel(int width,int height){
-        setBounds(0,0,Main.width,Main.height);
+        setBounds(0,0,Parameter.width,Parameter.height);
         setLayout(null);
-        d=Main.width/11;
-        h=Main.height/13;
+        d=Parameter.width/11;
+        h=Parameter.height/13;
         initButtons();
         initLeftArea();
 
@@ -121,6 +122,7 @@ public abstract class AbstractFunctionPanel extends JPanel implements Publisher{
         setLocation(x, y);
     }
 
+    public abstract void init();
 
     public abstract void actionA();
 
@@ -144,10 +146,10 @@ public abstract class AbstractFunctionPanel extends JPanel implements Publisher{
    public static void main(String[] args) {
         SwingUtilities.invokeLater(()->{
             JFrame jFrame=new JFrame();
-            jFrame.setBounds(100,100,Main.width,Main.height);
+            jFrame.setBounds(100,100,Parameter.width,Parameter.height);
             jFrame.setVisible(true);
             jFrame.setLayout(null);
-            AbstractFunctionPanel abstractFunctionPanel=new AbstractFunctionPanel(Main.width,Main.height) {
+            AbstractFunctionPanel abstractFunctionPanel=new AbstractFunctionPanel(Parameter.width,Parameter.height) {
                 
                 @Override
                 public void actionA() {
@@ -158,6 +160,11 @@ public abstract class AbstractFunctionPanel extends JPanel implements Publisher{
                 @Override
                 public void actionB() {
                     System.out.println("it");
+                    
+                }
+
+                @Override
+                public void init() {
                     
                 }
             };

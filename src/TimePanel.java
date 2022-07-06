@@ -1,4 +1,6 @@
+package src;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -24,15 +26,21 @@ public class TimePanel extends AbstractFunctionPanel{
         for(JTextField jTextField:jTextFields){
             if(jTextField!=null) jTextField.setEditable(false);
         }
+        init();
+    }
+
+
+    public void init(){
+        if(missionPane==null) System.out.println("缺少任务面板");
         if(missionPane!=null) mission=missionPane.getCurMission();
-        mission=new Mission(100,"任务1","喜欢玩游戏");      //用来测试用的语句
         if(mission!=null){
             jTextFields[0].setText(mission.getText());
             jTextArea.setText(mission.getContent());
         }
         refreshTimeFiled();
-        setLocation(x,y);
     }
+
+
 
     @Override
     public void actionA() {
@@ -106,25 +114,30 @@ public class TimePanel extends AbstractFunctionPanel{
         actionB();
     }
 
+    //计时结束事件
+    public void timeEnd(){
+        // 弹窗提示，播放音乐
+        MyMusicPlayer.setMusic(Parameter.musica);
+        MyMusicPlayer.play();
+        JOptionPane.showMessageDialog(this,"任务时间结束!");
+        MyMusicPlayer.stop();
+        //通知上级容器切换窗口
+        notice(observer);
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()->{
             JFrame jFrame=new JFrame();
-            jFrame.setBounds(100,100,Main.width,Main.height);
+            jFrame.setBounds(100,100,Parameter.width,Parameter.height);
             jFrame.setVisible(true);
             jFrame.setLayout(null);
-            AbstractFunctionPanel abstractFunctionPanel=new TimePanel(Main.width,Main.height,null);
+            AbstractFunctionPanel abstractFunctionPanel=new TimePanel(Parameter.width,Parameter.height,null);
             jFrame.add(abstractFunctionPanel);
         });
     }
 
-    //计时结束事件
-    public void timeEnd(){
-        //TODO 弹窗提示，播放音乐，
-
-        //通知上级容器切换窗口
-        notice(observer);
-    }
+    
 
     
 }
