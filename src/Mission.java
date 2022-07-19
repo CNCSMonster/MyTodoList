@@ -164,7 +164,24 @@ public class Mission extends JButton implements Publisher{
 
     @Override
     public String toString() {
-        return "任务名"+getText()+"\n任务时间:"+getLimitTime()+"\n任务内容:"+getContent();
+        return "任务名:"+getText()+"\n任务总时间:"+getLimitTime()+"\n任务剩余时间:"+getRestTime()+"\n任务内容:"+getContent();
+    }
+
+    //把一个String转化为Mission
+    public static Mission valueOf(String string){
+        String[] sa=string.split("\n");
+        String missionName=sa[0].substring(4);  //下标4对应实际序号5，从第五个字符开始截取到结尾
+        String limitTime=sa[1].substring(6);   //任务总时间
+        String restTime=sa[2].substring(7);
+        String contentString=sa[3].substring(5);
+        for(int i=4;i<sa.length;i++){
+            contentString+='\n'+sa[i];
+        }
+        int lTime=Integer.parseInt(limitTime);
+        int rTime=Integer.parseInt(restTime);
+        Mission out=new Mission(lTime,missionName,contentString);
+        out.setRestTime(rTime);
+        return out;
     }
 
 }

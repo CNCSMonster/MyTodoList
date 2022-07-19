@@ -97,6 +97,8 @@ public class MyTodoList extends JPanel implements Observer{
         int width=getWidth();
         int height=getHeight();
         missionPane=new MissionPane(0,0,7*d,13*h);
+        missionPane.addMissions(DAO.loadMissionsToday());
+
         addPanel=new AddPanel(0,0,width, height, missionPane);
         editPanel=new EditPanel(0,0,width, height, missionPane);
         timePanel=new TimePanel(0,0,width, height, missionPane);
@@ -107,6 +109,11 @@ public class MyTodoList extends JPanel implements Observer{
         editPanel.setName("editPanel");
         timePanel.setName("timePanel");
     }
+
+    public MissionPane getMissionPane() {
+        return missionPane;
+    }
+
 
     //创建主面板
     private void creMainPanel(){
@@ -163,6 +170,7 @@ public class MyTodoList extends JPanel implements Observer{
             JFrame jFrame=new JFrame();
             jFrame.setBounds(0,0,Parameter.width,Parameter.height);
             jFrame.setLayout(null);
+            jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             MyTodoList mtl=new MyTodoList(Parameter.width,Parameter.height);
             jFrame.setContentPane((Container) mtl);
             jFrame.setVisible(true);

@@ -26,7 +26,6 @@ public class TimePanel extends AbstractFunctionPanel{
         for(JTextField jTextField:jTextFields){
             if(jTextField!=null) jTextField.setEditable(false);
         }
-        init();
     }
 
 

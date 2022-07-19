@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 /*
  * 用来存放任务的滚动面板
  */
-class MissionPane extends JScrollPane implements Observer{
+public class MissionPane extends JScrollPane implements Observer{
     
     private int missionWidth;
     private int missionheight;
@@ -53,6 +53,12 @@ class MissionPane extends JScrollPane implements Observer{
         jPanel.repaint();
     }
 
+    public void addMissions(List<Mission> missions){
+        for(Mission mission:missions){
+            if(mission!=null) addMission(mission);
+        }
+    }
+
     public void removeMission(Mission mission){
         if(mission==null) return;
         if(curMission==mission) curMission=null;
@@ -66,10 +72,6 @@ class MissionPane extends JScrollPane implements Observer{
         //可能对空间进行缩小，一页最多四个任务，所以多于四个任务删除后就要缩小空间
         if(num>4) jPanel.setPreferredSize(new Dimension(getWidth(),missionheight/2*3*(num-1)));
         repaint();
-
-
-
-
     }
 
 
@@ -102,7 +104,10 @@ class MissionPane extends JScrollPane implements Observer{
         return curMission;
     }
 
-
+    //把当日任务按照指定保存在当日指定格式的文件中
+    public void store(){
+        DAO.storeMissionsToday(missions);
+    }
 
 
 
