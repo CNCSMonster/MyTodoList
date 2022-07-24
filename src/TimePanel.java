@@ -115,11 +115,16 @@ public class TimePanel extends AbstractFunctionPanel{
 
     //计时结束事件
     public void timeEnd(){
+        //把完成的任务追加写入到完成文件夹中
+        DAO.addFinishedMissionToday(mission);
+        //同时把任务从面板中删除
+        missionPane.removeMission(mission);
         // 弹窗提示，播放音乐
         MyMusicPlayer.setMusic(Parameter.musica);
         MyMusicPlayer.play();
         JOptionPane.showMessageDialog(this,"任务时间结束!");
         MyMusicPlayer.stop();
+
         //通知上级容器切换窗口
         notice(observer);
     }

@@ -10,6 +10,7 @@ import java.awt.event.*;
  * @author
  * 任务类型
  */
+import java.util.ArrayList;
 
 public class Mission extends JButton implements Publisher{
     private int limitTime;  //时间上限
@@ -162,6 +163,9 @@ public class Mission extends JButton implements Publisher{
         this.observer=observer;
     }
 
+    
+
+    
     @Override
     public String toString() {
         return "任务名:"+getText()+"\n任务总时间:"+getLimitTime()+"\n任务剩余时间:"+getRestTime()+"\n任务内容:"+getContent();
@@ -184,4 +188,7 @@ public class Mission extends JButton implements Publisher{
         return out;
     }
 
+    public static void main(String[] args) {
+        
+    }
 }
