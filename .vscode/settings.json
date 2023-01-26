@@ -1,6 +1,6 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "e:\\javakit\\reference_lib\\json-20220320.jar"
+        "lib/**/*.jar"
+        // "e:\\javakit\\reference_lib\\json-20220320.jar"
     ]
 }

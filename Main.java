@@ -6,7 +6,6 @@ import javax.swing.SwingUtilities;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import src.DAO;
 import src.MyTodoList;
 
 public class Main extends JFrame{

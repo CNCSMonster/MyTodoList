@@ -121,6 +121,7 @@ public class TimePanel extends AbstractFunctionPanel{
         missionPane.removeMission(mission);
         // 弹窗提示，播放音乐
         MyMusicPlayer.setMusic(Parameter.musica);
+        
         MyMusicPlayer.play();
         JOptionPane.showMessageDialog(this,"任务时间结束!");
         MyMusicPlayer.stop();
